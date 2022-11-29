@@ -24,7 +24,7 @@ function DetailsScreen(props: {
 
     const deleteProduct = async (id: string) => {
         let response = await apiClient.delete(id);
-        // if (response) props.goToListing();
+        if (response) props.goToListing();
     };
 
     return (

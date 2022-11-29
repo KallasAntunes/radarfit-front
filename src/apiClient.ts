@@ -20,64 +20,44 @@ class ApiClient {
     }
 
     async create(product: Product): Promise<boolean> {
-        try {
-            let response = await fetch(this.baseUrl + '/produtos/', {
-                method: 'POST',
-                body: JSON.stringify(product),
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            });
-            return response.ok;
-        } catch (error) {
-            console.log(error);
-            return false;
-        }
+        let response = await fetch(this.baseUrl + '/produtos/', {
+            method: 'POST',
+            body: JSON.stringify(product),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        return response.ok;
     }
 
     async update(id: string, product: Product): Promise<boolean> {
-        try {
-            let response = await fetch(this.baseUrl + '/produtos/' + id, {
-                method: 'PUT',
-                body: JSON.stringify(product),
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            });
-            return response.ok;
-        } catch (error) {
-            console.log(error);
-            return false;
-        }
+        let response = await fetch(this.baseUrl + '/produtos/' + id, {
+            method: 'PUT',
+            body: JSON.stringify(product),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        return response.ok;
     }
 
     async patch(id: string, product: Product): Promise<boolean> {
-        try {
-            let response = await fetch(this.baseUrl + '/produtos/' + id, {
-                method: 'PUT',
-                body: JSON.stringify(product),
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            });
-            return response.ok;
-        } catch (error) {
-            console.log(error);
-            return false;
-        }
+        let response = await fetch(this.baseUrl + '/produtos/' + id, {
+            method: 'PUT',
+            body: JSON.stringify(product),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        return response.ok;
     }
 
     async delete(id: string): Promise<boolean> {
-        try {
-            let response = await fetch(this.baseUrl + '/produtos/' + id, {
-                method: 'DELETE'
-            });
-            console.log(response)
-            return response.ok;
-        } catch (error) {
-            console.log(error);
-            return false;
-        }
+        let response = await fetch(this.baseUrl + '/produtos/' + id, {
+            method: 'DELETE'
+        });
+        console.log(response)
+        return response.ok;
     }
 
 }

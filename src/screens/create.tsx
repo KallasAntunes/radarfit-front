@@ -10,9 +10,9 @@ function CreateScreen(props: {
 
   const apiClient = new ApiClient();
 
-  const [name, setName] = useState<string>('Celular');
-  const [description, setDescription] = useState<string>('Um celular normal');
-  const [value, setValue] = useState<number>(200);
+  const [name, setName] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [value, setValue] = useState<number>();
 
   useEffect(() => {
     getDetails();
@@ -28,7 +28,7 @@ function CreateScreen(props: {
 
   const saveProduct = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if(name == '' || value == null || description == '' ) return;
+    if (name == '' || value == null || description == '') return;
 
     let product: Product = {
       produto: name,
