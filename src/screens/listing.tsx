@@ -1,6 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import ApiClient from '../apiClient';
 import '../App.css';
+import { FaSearch, FaPlus } from "react-icons/fa";
 import { Product } from '../models/product';
 
 function ListingScreen(props: {
@@ -12,6 +13,8 @@ function ListingScreen(props: {
 
     const [products, setProducts] = useState<Product[]>([]);
 
+    const [isLoading, setIsLoading] = useState(true);
+
     const [q, setQ] = useState('');
 
     useEffect(() => {
@@ -19,34 +22,43 @@ function ListingScreen(props: {
     }, []);
 
     const getProducts = async () => {
-        let response = await apiClient.getAll();
-        setProducts(response);
+        setIsLoading(true);
+        apiClient.getAll().then(response => {
+            setProducts(response);
+            setIsLoading(false);
+        });
     };
 
     const searchProducts = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        let response = await apiClient.find(q);
-        setProducts(response);
+        setIsLoading(true);
+        apiClient.find(q).then(response => {
+            setProducts(response);
+            setIsLoading(false);
+        });
     };
 
     const changeQ = (event: ChangeEvent<HTMLInputElement>) =>
         setQ(event.target.value);
 
-    const clearQ = () => setQ('');
-
     return (
         <div className="listing">
-            <form onSubmit={searchProducts}>
-                <input type="text" value={q} onChange={changeQ} />
-                <button type='button' onClick={clearQ}>❌</button>
-                <button type='submit'>🔎</button>
-            </form>
-            <button type='button' onClick={() => props.goToCreate()}>➕</button>
-            {products.map(product =>
-                <button onClick={() => props.goToDetails(product._id!)}>
-                    {JSON.stringify(product)}
-                </button>
-            )}
+            <div className='navBar'>
+                <button type='button' id='addButton' onClick={() => props.goToCreate()}><FaPlus size={17} /></button>
+                <form onSubmit={searchProducts}>
+                    <input id='searchBar' placeholder='Pesquisar produtos' type="text" value={q} onChange={changeQ} />
+                    <button type='submit'><FaSearch size={16} /></button>
+                </form>
+            </div>
+            {isLoading && <div className="loader"></div>}
+            <div className='productsContainer'>
+                {!isLoading && products.map(product =>
+                    <button className='productCard' type='button' onClick={() => props.goToDetails(product._id!)}>
+                        <p>Produto: {product.produto}</p>
+                        <p>Valor: R${product.valor}</p>
+                    </button>
+                )}
+            </div>
         </div>
     );
 }

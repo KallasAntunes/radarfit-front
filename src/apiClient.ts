@@ -1,7 +1,7 @@
 import { Product } from "./models/product";
 
 class ApiClient {
-    baseUrl = 'http://localhost:5000/api';
+    baseUrl = 'https://radarfit-back.kallaslima.repl.co/api';
 
     async getAll(): Promise<Product[]> {
         let response = await fetch(this.baseUrl + '/produtos/');
